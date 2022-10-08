@@ -1,0 +1,31 @@
+stages:
+  - prep
+  - build
+  - remove_old
+  - deploy
+
+job 0:
+  stage: .pre
+  tags: [linux]
+  script: "echo Beginning Build Process"
+  script: "docker login --username khamade --password faJMrMxjSmAsL1SY4Gn- https://git.hamy.dev"
+
+job 2:
+  stage: build
+  tags: [linux]
+  script: "docker build -t git.hamy.dev/khamade/home_dashboard ."
+
+job 3:
+  stage: build
+  tags: [linux]
+  script: "docker push git.hamy.dev/khamade/home_dashboard"
+
+job 4:
+  stage: remove_old
+  tags: [linux]
+  script: 'docker stop Home_Dashboard || true && docker rm Home_Dashboard || true'
+
+job 5:
+  stage: deploy
+  tags: [linux]
+  script: 'docker run --name Home_Dashboard -p 2222:8180 --restart=unless-stopped -e "SMARTTHINGSAPITOKEN=8b61620d-eaa6-4f9c-abda-390a78cde78f" -e "DARKSKYAPITOKEN=28ea08939fb51cfcaec430403406d631" -e "NEWSAPITOKEN=bd9c6551008540078256a8188d7f26cf" -e "MONGODBAPISTRING=mongodb+srv://networkalertuser:N3tw0rk@l3rt@hamcluster-uvfjw.mongodb.net/test?retryWrites=true&w=majority" -e "PRTGUSERNAME=khamade" -e "PRTGPASSHASH=3862019968" -e "LONGITUDE=-83.4066" -e "LATITUDE=42.6907" -e "EXPRESSPORT=8180" -d git.hamy.dev/khamade/home_dashboard:latest'

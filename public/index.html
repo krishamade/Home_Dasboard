@@ -1,0 +1,540 @@
+<html>
+
+    <head>
+        <title>Buick Home Dashboard</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+        </script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/skycons/1396634940/skycons.js"></script>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://browser.sentry-cdn.com/5.8.0/bundle.min.js"
+            integrity="sha384-qlxNoEAgNliJy7zXiR+uKx/fFAimdeVfEOK0SA5/wrXLioMmASbjvfVAMaQFKVI6" crossorigin="anonymous">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+        <script type="text/javascript" src="js/backgroundRender.js"></script>
+        <script type="text/javascript" src="js/clock.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <link rel="stylesheet" href="css/circle.css">
+    </head>
+
+    <body>
+        <div class="bodyDay">
+            <div id="loader">
+                <div class="container-fluid">
+                    <h1 id="welcomeHome">Welcome home... Here's what's going on</h1>
+                </div>
+            </div>
+            <div id="dashboard">
+                <div id="mainDashboard">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col">
+                                <li id="garage">
+                                    <div class="col-auto">
+                                        <h3>Garage</h3>
+                                        <div class="row">
+                                            <div class="col-auto">
+                                                <div id="garageDoorSensorBattery"></div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <img id="garageDoorIcon" width="64" height="64">
+                                            </div>
+                                            <div class="col-auto">
+                                                <div class="temperatureTileIndicator" id="garageTemperature"></div>
+                                            </div>
+                                        </div>
+                                        <div id="garageWidgetsBottomRow" class="row">
+                                            <div class="col-auto">
+                                                <p id="garageLight1"></p>
+                                            </div>
+                                            <div class="col-auto">
+                                                <p id="garageVanityLightsOnOff"></p>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li id="kitchenStatus">
+                                    <h3>Kitchen</h3>
+                                    <div id="kitchenCol" class="col-auto">
+                                        <div id="kitchenRow" class="row">
+                                            <div class="col-auto">
+                                                <div id="motionSensorKitchen" class="col">
+                                                    <div class="row">
+                                                        <div id="batteryColumn" class="col">
+                                                            <p id="kitchenMotionBattery"></p>
+                                                        </div>
+                                                        <div id="vanityLightsKitchen" class="col-auto">
+                                                            <p id="kitchenVanityLightsOnOff"></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <div class="temperatureTileIndicator" id="kitchenTemperature"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li id="krisRoom">
+                                    <h3>Kris's Room</h3>
+                                    <p id="krisWemoDesktop"></p>
+                                    <p id="krisRoomLight1"></p>
+                                    <p id="krisRoomSensorTemperature"></p>
+                                    <p id="krisRoomSensorBattery"></p>
+                                </li>
+                                <li id="livingRoom">
+                                    <h3>Living Room</h3>
+                                    <p id="livingRoomLight1OnOff"></p>
+                                </li>
+                                <li id="frontDoor">
+                                    <h3>Front Door</h3>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="row">
+                                                <div class="col"></div>
+                                                <div class="col">
+                                                    <p id="frontDoorCamBattery"></p>
+                                                </div>
+                                                <div class="col"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <p id="frontDoorCamMotion"></p>
+                                        </div>
+                                        <div class="col-auto">
+                                            <p id="garageLight2"></p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </div>
+                            <div class="col">
+                                <li>
+                                    <div class="col-auto">
+                                        <h3>Weather</h3>
+                                        <div id="currentWeather" class="row">
+                                            <div class="col-auto">
+                                                <p class="navbarIndicatorsConfig" id="currentWeatherWindSpeed"></p>
+                                                <p>Wind Speed</p>
+                                            </div>
+                                            <span style="display:inline-block; width: 20px;"></span>
+                                            <div class="col-auto">
+                                                <canvas id="weathericon" width="50" height="50"></canvas>
+                                                <p id="currentWeatherSummary"></p>
+                                            </div>
+                                            <span style="display:inline-block; width: 20px;"></span>
+                                            <div id="weatherHeader" class="col-auto">
+                                                <p class="navbarIndicatorsConfig" id="currentWeatherTemp"></p>
+                                                <p>Temperature</p>
+                                            </div>
+                                            <div class="col-auto">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li id="homeThermostat">
+                                    <div class="col-auto">
+                                        <h3>Thermostat</h3>
+                                        <div id="thermostatRow" class="row">
+                                            <div class="col">
+                                                <p>Indoor Temp</p>
+                                                <div class="temperatureTileIndicator" id="currentInHomeTemperature">
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <p>Setpoint</p>
+                                                <div class="temperatureTileIndicator" id="currentThermostatSetpoint">
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="col-auto">
+                                                    <img id="thermostatMode" width="50" height="50">
+                                                    <p>HVAC Mode</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li id="chartTest">
+                                    <h3>24-Hour Network Speed</h3>
+                                    <div>
+                                        <canvas id="myChart"></canvas>
+                                    </div>
+                                </li>
+                            </div>
+                            <div class="col">
+                                <li class="newsConfiguration" id="topUSNews">
+                                    <h3>Top U.S. News</h3>
+                                    <p id="topNews0"></p>
+                                    <p id="topNews1"></p>
+                                    <p id="topNews2"></p>
+                                    <p id="topNews3"></p>
+                                    <p id="topNews4"></p>
+                                </li>
+                                <li class="newsConfiguration" id="topTechNews">
+                                    <h3>Top Tech News</h3>
+                                    <p id="topTechNews0"></p>
+                                    <p id="topTechNews1"></p>
+                                    <p id="topTechNews2"></p>
+                                    <p id="topTechNews3"></p>
+                                    <p id="topTechNews4"></p>
+                                </li>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <footer>
+        <div class="row">
+            <div id="dateCol" class="col">
+                <span id="datetime"></span>
+            </div>
+            <div class="col"></div>
+            <div class="col">
+                <p id="ServerStatus"></p>
+            </div>
+        </div>
+    </footer>
+    <script>
+        function start() {
+            // Initialize Sentry Bug Tracking connection
+            Sentry.init({
+                dsn: 'https://ae868bc624d94d6ca550cbed75a880f1@sentry.io/1818511'
+            });
+
+            //Instantiating the websockets on the client side
+            var serverIp = location.port == '5500' ? location.hostname + ':8180' : location.host;
+            var protocol = location.protocol == 'https:' ? 'wss://' : 'ws://';
+            let wsLocation = protocol + serverIp
+            ws = new WebSocket(wsLocation)
+
+            //Add html to show when the client is attempting to connect to the server
+            document.getElementById("ServerStatus").innerHTML = "Server Status: Attempting to connect..."
+
+            //Creates initial overlay splash page effect of fading into the dashboard
+            jQuery(document).ready(function () {
+                $("#loader").delay(800).fadeOut(400, function () {
+                    $("#dashboard").fadeIn(400);
+                });
+            });
+
+            //SpeedTest Variables
+            twentyFourHourSpeedTestData = []
+            twentyFourHourSpeedTestDateTimes = []
+            twentyFourHourSpeedTestDownloadSpeeds = []
+            twentyFourHourSpeedTestUploadSpeeds = []
+
+            //Moment/Date Variables
+            const lessThanTwentyFourHoursAgo = (date) => {
+                return moment(date).isAfter(moment().subtract(24, 'hours'));
+            }
+
+            //Google News API Variables
+            var newsTopNews
+            var newsTopTechNews
+
+            //Weather Variables
+            var weatherData
+            var weatherCurrently
+            var weatherCurrentlyIcon
+            var skycons = new Skycons({
+                "color": "white"
+            })
+            skycons.play()
+
+            //SmartThings Sensors below pulled from SmartThings v1 API
+            //Kitchen Motion Sensor Variables
+            var kitchenMotionData
+
+            //Kitchen Vanity Light Variables
+            var kitchenVanityLightData
+            var kitchenVanityLightsOnOff
+            var kitchenVanityLightsColor
+
+            //Home Thermostat Sensor Variables
+            var buickHomeThermostatData
+            var buickHomeThermostatTemperature
+            var buickHomeThermostatSetpoint
+            var buickHomeThermostatMode
+
+            //Living Room Sensor Variables
+            var livingRoomData
+
+            //Front Door Sensor Variables
+            var frontDoorData
+
+            //Kris's Room Sensor Variables
+            var krisRoomMultiSensorData
+            var krisRoomDesktopWemoSwitch
+            var krisRoomLight1
+
+            //Lindsey's Room Sensor Variables
+
+            //Garage Sensor Variables
+            var garageLight1Data
+            var garageLight2Data
+            var garageVanityLightsData
+            var garageDoorSensorData
+
+            //Outdoor Sensor Variables
+
+            ws.onopen = function () {
+                console.log('Connected to WebSocket Server.')
+                document.getElementById("ServerStatus").innerHTML = "Server Status: Online"
+            }
+
+            ws.onmessage = function (e) {
+                //TODO add last activity to motion sensors and lights
+                //TODO add animations showing widgets popping  in
+
+                let payload = JSON.parse(e.data)
+                //console.log(payload)
+
+                if (payload.action == "refresh") {
+                    location.reload()
+                    console.log("Page Reloaded")
+                }
+
+                //Pull Weather Data from initial payload for easier and more concise data handling
+                if (weatherData === null || weatherData === undefined) {
+                    weatherData = "Not Available"
+                    weatherCurrently = "Not Available"
+                    weatherCurrentlyIcon = weatherCurrently.icon
+                } else {
+                    weatherData = payload.weatherData
+                    weatherCurrently = weatherData.currently
+                    weatherCurrentlyIcon = weatherCurrently.icon
+                }
+                //Set weather data to html objects on dashboard
+                if (weatherCurrently.temperature === null | weatherCurrently.temperature === undefined) {
+                    document.getElementById("currentWeatherTemp").innerHTML = "Loading..."
+                    document.getElementById("currentWeatherSummary").innerHTML = "Loading..."
+                    document.getElementById("currentWeatherWindSpeed").innerHTML = "Loading..."
+                } else {
+                    document.getElementById("currentWeatherTemp").innerHTML = Math.round(weatherCurrently
+                        .temperature) + "°F"
+                    document.getElementById("currentWeatherSummary").innerHTML = weatherCurrently.summary
+                    document.getElementById("currentWeatherWindSpeed").innerHTML = Math.round(weatherCurrently
+                            .windSpeed) +
+                        "MPH"
+                    skycons.set(document.getElementById("weathericon"), weatherCurrentlyIcon)
+                }
+                //Pull Garage Sensor Data from initial payload for easier and more concise data handling
+                garageDoorSensorData = payload['Garage Door Sensor'].statusData
+                garageLight1Data = payload['Garage Light 1'].statusData
+                garageLight2Data = payload['Garage Light 2'].statusData
+                garageVanityLightsData = payload['Garage Lights'].statusData
+
+                //Set Garage Sensor data to html objects on dashboard
+                /*document.getElementById("garageDoorSensorOpenClosed").innerHTML = "The Garage Door is " +
+                    garageDoorSensorData.contactSensor.contact.value*/
+
+                var garageDoorBatteryColor = (garageDoorSensorData.battery.battery.value <= 50 &&
+                    garageDoorSensorData.battery.battery.value > 25) ? "orange" : (garageDoorSensorData.battery
+                    .battery.value < 25) ? "red" : "green"
+                document.getElementById("garageDoorSensorBattery").innerHTML = `
+                    <div class="c100 p${garageDoorSensorData.battery.battery.value} dark small ${garageDoorBatteryColor}">
+                        <span>${garageDoorSensorData.battery.battery.value}%</span>
+                        <div class="slice">
+                            <div class="bar"></div>
+                            <div class="fill"></div>
+                        </div>
+                    </div>`
+                garageDoorSensorData.contactSensor.contact.value == "open" ? document.getElementById(
+                    "garageDoorIcon").src = "images/open_garage_door_red.png" : document.getElementById(
+                    "garageDoorIcon").src = "images/closed_garage_door_green.png"
+                document.getElementById("garageLight1").innerHTML = "Light 1 " + garageLight1Data.light
+                    .switch.value
+                document.getElementById("garageVanityLightsOnOff").innerHTML = "Vanity Lights " +
+                    garageVanityLightsData.switch.switch.value
+                document.getElementById("garageTemperature").innerHTML = garageDoorSensorData
+                    .temperatureMeasurement.temperature.value + "°F"
+
+                //Pull Kitchen Motion Sensor Data from initial payload for easier and more concise data handling
+                kitchenMotionData = payload['Motion Sensor'].statusData
+
+                //Set Kitchen Motion Sensor data to html objects on dashboard
+                /*document.getElementById("kitchenMotionStatus").innerHTML = "Currently there is " + kitchenMotionData
+                    .motionSensor.motion.value + " motion"*/
+                document.getElementById("kitchenTemperature").innerHTML = kitchenMotionData
+                    .temperatureMeasurement.temperature.value + "°F"
+
+                var kitchenBatteryColor = (kitchenMotionData.battery.battery.value <= 50 && kitchenMotionData
+                        .battery.battery.value > 25) ? "orange" : (kitchenMotionData.battery.battery.value < 25) ?
+                    "red" : "green"
+                document.getElementById("kitchenMotionBattery").innerHTML = `
+                        <div class="c100 p${kitchenMotionData.battery.battery.value} dark small ${kitchenBatteryColor}">
+                            <span>${kitchenMotionData.battery.battery.value}%</span>
+                            <div class="slice">
+                                <div class="bar"></div>
+                                <div class="fill"></div>
+                            </div>
+                        </div>`
+
+                var garageDoorBatteryColor = (garageDoorSensorData.battery.battery.value <= 50 && garageDoorSensorData
+                    .battery.battery.value > 25) ? "orange" : (garageDoorSensorData.battery.battery.value <
+                    25) ? "red" : "green"
+                document.getElementById("garageDoorSensorBattery").innerHTML = `
+                        <div class="c100 p${garageDoorSensorData.battery.battery.value} dark small ${garageDoorBatteryColor}">
+                            <span>${garageDoorSensorData.battery.battery.value}%</span>
+                            <div class="slice">
+                                <div class="bar"></div>
+                                <div class="fill"></div>
+                            </div>
+                        </div>`
+                //Pull Kris's Room Sensor Data from initial payload for easier and more concise data handling
+                krisRoomDesktopWemoSwitch = payload['Kris Desktop'].statusData
+                krisRoomLight1 = payload['Kris Room Light 1'].statusData
+
+                //Set Kris's Room Sensor data to html objects on dashboard
+                document.getElementById("krisWemoDesktop").innerHTML = "Buick VMware Host is " +
+                    krisRoomDesktopWemoSwitch.switch.switch.value
+                document.getElementById("krisRoomLight1").innerHTML = "Kris's Room Light is " + krisRoomLight1.light
+                    .switch.value
+
+                //Pull Living Room Sensor Data from initial payload for easier and more concise data handling
+                livingRoomData = payload['Living Room'].statusData
+
+                //Set Living Room Sensor data to html objects on dashboard
+                document.getElementById("livingRoomLight1OnOff").innerHTML = "The Light is " + livingRoomData.light
+                    .switch.value
+
+                //Pull Front Door Sensor Data from initial payload for easier and more concise data handling
+                frontDoorData = payload['Front Door'].statusData
+                
+                //TODO Is now the Front Door Light for now move back to garage when replaced
+                document.getElementById("garageLight2").innerHTML = "Porch Light  " + garageLight2Data.light
+                .switch.value
+
+                //Set Front Door Sensor data to html objects on dashboard
+                var frontDoorBatteryColor = (frontDoorData.battery.battery.value <= 50 && frontDoorData.battery
+                        .battery.value > 25) ? "orange" : (frontDoorData.battery.battery.value < 25) ? "red" :
+                    "green"
+                document.getElementById("frontDoorCamBattery").innerHTML = `
+                    <div class="c100 p${frontDoorData.battery.battery.value} dark small ${frontDoorBatteryColor}">
+                        <span>${frontDoorData.battery.battery.value}%</span>
+                        <div class="slice">
+                            <div class="bar"></div>
+                            <div class="fill"></div>
+                        </div>
+                    </div>`
+                if (frontDoorData.motionSensor.motion.value === 'active') {
+                    document.getElementById("frontDoorCamMotion").innerHTML = "Motion"
+                } else {
+                    document.getElementById("frontDoorCamMotion").innerHTML = "No Motion"
+                }
+
+                //Pull Buick Home Thermostat Data from initial payload for easier and more concise data handling
+                buickHomeThermostatData = payload[`Buick House`].statusData.thermostat
+
+                //Set Buick Home Thermostat Data to html objects on dashboard
+                document.getElementById("currentInHomeTemperature").innerHTML = buickHomeThermostatData.temperature
+                    .value + "°F"
+                document.getElementById("currentThermostatSetpoint").innerHTML = buickHomeThermostatData
+                    .thermostatSetpoint.value + "°F"
+                buickHomeThermostatData.thermostatMode.value === "heat" ? document.getElementById(
+                    "thermostatMode").src = "images/heating.png" : document.getElementById(
+                    "thermostatMode").src = "images/cooling.png"
+
+                //Pull Vanity Light Data from initial payload for easier and more concise data handling
+                kitchenVanityLightData = payload['Kitchen Cabinet Vanity Lights'].statusData
+                //TODO Pull more Vanity Light Data using console.log(kitchenVanityLightData)
+
+                //Set Vanity Light data to html objects on dashboard
+                document.getElementById("kitchenVanityLightsOnOff").innerHTML = "Vanity Lights " +
+                    kitchenVanityLightData.light.switch.value
+
+                //Pull Google News - TOP NEWS Data from initial payload for easier and more concise data handling
+                newsTopNews = payload['topNewsData']
+                newsTopTechNews = payload['topTechNewsData']
+
+                //Set Top News Data to html objects on dashboard
+                for (let i = 0; i < 5; i++) {
+                    document.getElementById(`topNews${i}`).innerHTML = newsTopNews[i].title
+                    document.getElementById(`topTechNews${i}`).innerHTML = newsTopTechNews[i].title
+                }
+                if ('speedTestPayload' in payload) {
+                    if ('24hour' in payload.speedTestPayload) {
+                        payload.speedTestPayload['24hour'].map(items => {
+                            twentyFourHourSpeedTestDateTimes.push(items.timestamp)
+                            twentyFourHourSpeedTestDownloadSpeeds.push(items.downloadSpeed)
+                            twentyFourHourSpeedTestUploadSpeeds.push(items.uploadSpeed)
+                        })
+
+                    }
+                }
+            }
+            try {
+                render24HourSpeedTestLineChart()
+
+            } catch(err) {console.log("Error " + err)}
+            setBackground()
+
+            // If socket is closed, retry connection every 5 seconds
+            ws.onclose = function () {
+                console.log('session closed')
+                setTimeout(start, 5000)
+            }
+        }
+
+        function render24HourSpeedTestLineChart(data, labels) {
+            var ctx = document.getElementById("myChart").getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: twentyFourHourSpeedTestDateTimes,
+                    datasets: [{
+                            label: "DL",
+                            data: twentyFourHourSpeedTestDownloadSpeeds,
+                            borderColor: 'rgba(75, 192, 192, .4)',
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        },
+                        {
+                            label: "Upload",
+                            data: twentyFourHourSpeedTestUploadSpeeds,
+                            borderColor: 'rgba(252, 27, 27, .4)',
+                            backgroundColor: 'rgba(252, 27, 27, 0.2)',
+                            pointStyle: 'rect',
+                        }
+                    ]
+                },
+                options: {
+                    legend: {
+                        labels: {
+                            fontColor: "white",
+                        }
+                    },
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                fontColor: "white",
+                                maxTicksLimit: 24,
+                            }
+                        }],
+                        xAxes: [{
+                            ticks: {
+                                fontColor: "white",
+                            }
+                        }]
+                    }
+                },
+            });
+        }
+
+        start()
+        setInterval(setBackground, 60000)
+    </script>
+
+</html>
